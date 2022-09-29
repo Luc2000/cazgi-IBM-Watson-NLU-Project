@@ -44,12 +44,13 @@ app.get("/url/emotion", (req, res) => {
     const analyzeParams =
     {
         "url": urlToAnalyze,
+        "language": "en",
         "features": {
             "keywords": {
                 "emotion": true,
                 "limit": 1
             }
-        }
+        },
     }
 
     const naturalLanguageUnderstanding = getNLUInstance();
@@ -70,12 +71,13 @@ app.get("/url/sentiment", (req, res) => {
     const analyzeParams =
     {
         "url": urlToAnalyze,
+        "language": "en",
         "features": {
             "keywords": {
                 "sentiment": true,
                 "limit": 1
             }
-        }
+        },
     }
 
     const naturalLanguageUnderstanding = getNLUInstance();
@@ -92,11 +94,12 @@ app.get("/url/sentiment", (req, res) => {
 });
 
 //The endpoint for the webserver ending with /text/emotion
-app.get("/text/emotion", (req, res) => {
-    let textToAnalyze = req.query.text
-    const analyzeParams =
+app.get("/text/emotion", (req,res) => {
+    let textToAnalyze = req.query.text;
+    const analyzeParams = 
     {
         "text": textToAnalyze,
+        "language": "en",
         "features": {
             "keywords": {
                 "emotion": true,
@@ -108,14 +111,13 @@ app.get("/text/emotion", (req, res) => {
     const naturalLanguageUnderstanding = getNLUInstance();
 
     naturalLanguageUnderstanding.analyze(analyzeParams)
-        .then(analysisResults => {
-            //Retrieve the emotion and return it as a formatted string
-
-            return res.send(analysisResults.result.keywords[0].emotion, null, 2);
-        })
-        .catch(err => {
-            return res.send("Could not do desired operation " + err);
-        });
+    .then(analysisResults => {
+        //Retrieve the emotion and return it as a formatted string
+        return res.send(analysisResults.result.keywords[0].emotion,null,2);
+    })
+    .catch(err => {
+        return res.send("Could not do desired operation "+err);
+    });
 });
 
 app.get("/text/sentiment", (req, res) => {
@@ -123,12 +125,13 @@ app.get("/text/sentiment", (req, res) => {
     const analyzeParams =
     {
         "text": textToAnalyze,
+        "language": "en",
         "features": {
             "keywords": {
                 "sentiment": true,
                 "limit": 1
             }
-        }
+        },
     }
 
     const naturalLanguageUnderstanding = getNLUInstance();
